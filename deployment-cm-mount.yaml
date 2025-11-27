@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-simple-app
+  labels:
+    app: python-simple-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-simple-app
+  template:
+    metadata:
+      labels:
+        app: python-simple-app
+    spec:
+      containers:
+        - name: python-simple-app
+          image: prasadkasthuri/python-web-app:a1
+          ports:
+            - containerPort: 8000
+
+          volumeMounts:
+            - name: app-config-volume
+              mountPath: /config   # Files appear here
+              readOnly: true
+
+      volumes:
+        - name: app-config-volume
+          configMap:
+            name: python-simple-app-config
+

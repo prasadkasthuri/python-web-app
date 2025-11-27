@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-simple-app
+  labels:
+    app: python-simple-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-simple-app
+  template:
+    metadata:
+      labels:
+        app: python-simple-app
+    spec:
+      containers:
+        - name: python-simple-app
+          image: prasadkasthuri/python-web-app:a1
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: python-simple-app-config
+                  key: db_host
+
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: python-simple-app-config
+                  key: db_port
+
