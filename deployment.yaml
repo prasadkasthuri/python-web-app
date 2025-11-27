@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: python-simple-app
+  name: python-simple-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-simple-app
+  template:
+    metadata:
+      labels:
+        app: python-simple-app
+    spec:
+      containers:
+      - image: prasadkasthuri/python-web-app:a1
+        name: python-simple-app
+        ports:
+        - containerPort: 8000
