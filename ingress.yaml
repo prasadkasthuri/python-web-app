@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: python-simple-app-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+    - hosts:
+        - a8746a5b59e3e4517b057e26734f16e5-555a2b38761648ec.elb.us-east-1.amazonaws.com
+      secretName: tls-secret
+  rules:
+    - host: a8746a5b59e3e4517b057e26734f16e5-555a2b38761648ec.elb.us-east-1.amazonaws.com
+      http:
+        paths:
+          - path: /demo
+            pathType: Prefix
+            backend:
+              service:
+                name: python-simple-app-clusterip
+                port:
+                  number: 8000
